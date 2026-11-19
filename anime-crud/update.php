@@ -22,7 +22,7 @@ if (isset($_POST['opslaan'])) {
     }
 }
 
-// gegevens van de ingredient ophalen
+// gegevens van ingredient ophalen
 $stmt = $db->prepare("SELECT * FROM ingredienten WHERE id = ?");
 $stmt->execute([$id]);
 $ingredient = $stmt->fetch(PDO::FETCH_ASSOC);

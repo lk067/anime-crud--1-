@@ -5,7 +5,7 @@ require 'db.php';
 $zoek = $_GET['zoek'] ?? "";
 $categorie = $_GET['categorie'] ?? "";
 
-// geen categorie gekozen? dan % = alle categorieën
+// categorie filteren
 $zoekCategorie = $categorie;
 if ($zoekCategorie == "") {
     $zoekCategorie = "%";

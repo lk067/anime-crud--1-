@@ -41,7 +41,7 @@ if (isset($_POST['opslaan'])) {
     <input type="text" name="naam">
 <br></br>
      <select name="categorie">
-    <option value="">-- Kies een categorie --</option>
+    <option value="">Kies een categorie</option>
     <option value="Groente">Groente</option>
     <option value="Vlees">Vlees</option>
     <option value="Zuivel">Zuivel</option>
