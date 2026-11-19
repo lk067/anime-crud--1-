@@ -1,8 +1,19 @@
 <?php
 require 'db.php';
 
-$result = $db->query("SELECT * FROM ingredienten");
-$ingredienten = $result->fetchAll(PDO::FETCH_ASSOC);
+// wat er in de URL staat ophalen
+$zoek = $_GET['zoek'] ?? "";
+$categorie = $_GET['categorie'] ?? "";
+
+// geen categorie gekozen? dan % = alle categorieën
+$zoekCategorie = $categorie;
+if ($zoekCategorie == "") {
+    $zoekCategorie = "%";
+}
+
+$stmt = $db->prepare("SELECT * FROM ingredienten WHERE naam LIKE ? AND categorie LIKE ? ORDER BY naam");
+$stmt->execute(["%" . $zoek . "%", $zoekCategorie]);
+$ingredienten = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="nl">
@@ -13,6 +24,20 @@ $ingredienten = $result->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
 
+<form method="get">
+    <input type="text" name="zoek" placeholder="Zoek op naam..." value="<?php echo htmlspecialchars($zoek); ?>">
+
+    <select name="categorie">
+        <option value="">Alle categorieën</option>
+        <option value="Groente" <?php if ($categorie == "Groente") echo "selected"; ?>>Groente</option>
+        <option value="Vlees" <?php if ($categorie == "Vlees") echo "selected"; ?>>Vlees</option>
+        <option value="Zuivel" <?php if ($categorie == "Zuivel") echo "selected"; ?>>Zuivel</option>
+        <option value="Overig" <?php if ($categorie == "Overig") echo "selected"; ?>>Overig</option>
+    </select>
+
+    <input type="submit" value="Zoeken" class="knop">
+    <a href="index.php">Reset</a>
+</form>
 
 <h1>Mijn ingredient lijst</h1>
 <a href="create.php" class="knop">Ingredient toevoegen</a>

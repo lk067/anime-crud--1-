@@ -20,6 +20,7 @@ if (isset($_POST['opslaan'])) {
         exit;
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="nl">
@@ -31,7 +32,6 @@ if (isset($_POST['opslaan'])) {
 <body>
 
 
-
 <h1>Ingredient toevoegen</h1>
 
 <p class="fout"><?php echo $melding; ?></p>
@@ -39,9 +39,14 @@ if (isset($_POST['opslaan'])) {
 <form method="post">
     <label>Naam</label>
     <input type="text" name="naam">
-
-    <label>Categorie</label>
-    <input type="text" name="categorie">
+<br></br>
+     <select name="categorie">
+    <option value="">-- Kies een categorie --</option>
+    <option value="Groente">Groente</option>
+    <option value="Vlees">Vlees</option>
+    <option value="Zuivel">Zuivel</option>
+    <option value="Overig">Overig</option>
+</select>  
 
     <label>Calorieën</label>
     <input type="number" name="calorieen">
