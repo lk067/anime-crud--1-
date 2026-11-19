@@ -4,19 +4,17 @@ require 'db.php';
 $melding = "";
 
 if (isset($_POST['opslaan'])) {
-    $titel = $_POST['titel'];
-    $genre = $_POST['genre'];
-    $afleveringen = $_POST['afleveringen'];
-    $jaar = $_POST['jaar'];
-    $studio = $_POST['studio'];
+    $naam = $_POST['naam'];
+    $categorie = $_POST['categorie'];
+    $calorieen = $_POST['calorieen'];
+    $benodigdheden = $_POST['benodigdheden'];
 
-    // checken of alles is ingevuld
-    if (empty($titel) || empty($genre) || empty($afleveringen) || empty($jaar) || empty($studio)) {
+    if ($naam == "" || $categorie == "" || $calorieen   == "" || $benodigdheden == "") {
         $melding = "Vul alle velden in!";
     } else {
-        $sql = "INSERT INTO anime (titel, genre, afleveringen, jaar, studio) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO ingredienten (naam, categorie, calorieen, benodigdheden) VALUES (?, ?, ?, ?)";
         $stmt = $db->prepare($sql);
-        $stmt->execute([$titel, $genre, $afleveringen, $jaar, $studio]);
+        $stmt->execute([$naam, $categorie, $calorieen, $benodigdheden]);
 
         header("Location: index.php");
         exit;
@@ -27,30 +25,27 @@ if (isset($_POST['opslaan'])) {
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Anime toevoegen</title>
+    <title>Ingredient toevoegen</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Anime toevoegen</h1>
+<h1>Ingredient toevoegen</h1>
 
 <p class="fout"><?php echo $melding; ?></p>
 
 <form method="post">
-    <label>Titel</label>
-    <input type="text" name="titel">
+    <label>Naam</label>
+    <input type="text" name="naam">
 
-    <label>Genre</label>
-    <input type="text" name="genre">
+    <label>Categorie</label>
+    <input type="text" name="categorie">
 
-    <label>Afleveringen</label>
-    <input type="number" name="afleveringen">
+    <label>Calorieën</label>
+    <input type="number" name="calorieen">
 
-    <label>Jaar</label>
-    <input type="number" name="jaar">
-
-    <label>Studio</label>
-    <input type="text" name="studio">
+    <label>Benodigdheden</label>
+    <input type="text" name="benodigdheden">
 
     <br><br>
     <input type="submit" name="opslaan" value="Opslaan" class="knop">

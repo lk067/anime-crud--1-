@@ -5,31 +5,30 @@ $id = $_GET['id'];
 $melding = "";
 
 if (isset($_POST['opslaan'])) {
-    $titel = $_POST['titel'];
-    $genre = $_POST['genre'];
-    $afleveringen = $_POST['afleveringen'];
-    $jaar = $_POST['jaar'];
-    $studio = $_POST['studio'];
+    $naam = $_POST['naam'];
+    $categorie = $_POST['categorie'];
+    $calorieen = $_POST['calorieen'];
+    $benodigdheden = $_POST['benodigdheden'];
 
-    if (empty($titel) || empty($genre) || empty($afleveringen) || empty($jaar) || empty($studio)) {
+    if ($naam == "" || $categorie == "" || $calorieen == "" || $benodigdheden == "") {
         $melding = "Vul alle velden in!";
     } else {
-        $sql = "UPDATE anime SET titel = ?, genre = ?, afleveringen = ?, jaar = ?, studio = ? WHERE id = ?";
+        $sql = "UPDATE ingredienten SET naam = ?, categorie = ?, calorieen = ?, benodigdheden = ? WHERE id = ?";
         $stmt = $db->prepare($sql);
-        $stmt->execute([$titel, $genre, $afleveringen, $jaar, $studio, $id]);
+        $stmt->execute([$naam, $categorie, $calorieen, $benodigdheden, $id]);
 
         header("Location: index.php");
         exit;
     }
 }
 
-// gegevens van de anime ophalen
-$stmt = $db->prepare("SELECT * FROM anime WHERE id = ?");
+// gegevens van de ingredient ophalen
+$stmt = $db->prepare("SELECT * FROM ingredienten WHERE id = ?");
 $stmt->execute([$id]);
-$anime = $stmt->fetch(PDO::FETCH_ASSOC);
+$ingredient = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if (!$anime) {
-    echo "Deze anime bestaat niet";
+if (!$ingredient) {
+    echo "Deze ingredient bestaat niet";
     exit;
 }
 ?>
@@ -37,30 +36,27 @@ if (!$anime) {
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Anime aanpassen</title>
+    <title>Ingredient aanpassen</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Anime aanpassen</h1>
+<h1>Ingredient aanpassen</h1>
 
 <p class="fout"><?php echo $melding; ?></p>
 
 <form method="post">
-    <label>Titel</label>
-    <input type="text" name="titel" value="<?php echo htmlspecialchars($anime['titel']); ?>">
+    <label>Naam</label>
+    <input type="text" name="naam" value="<?php echo htmlspecialchars($ingredient['naam']); ?>">
 
-    <label>Genre</label>
-    <input type="text" name="genre" value="<?php echo htmlspecialchars($anime['genre']); ?>">
+    <label>Categorie</label>
+    <input type="text" name="categorie" value="<?php echo htmlspecialchars($ingredient['categorie']); ?>">
 
-    <label>Afleveringen</label>
-    <input type="number" name="afleveringen" value="<?php echo $anime['afleveringen']; ?>">
+    <label>Calorieën</label>
+    <input type="number" name="calorieen" value="<?php echo $ingredient['calorieen']; ?>">
 
-    <label>Jaar</label>
-    <input type="number" name="jaar" value="<?php echo $anime['jaar']; ?>">
-
-    <label>Studio</label>
-    <input type="text" name="studio" value="<?php echo htmlspecialchars($anime['studio']); ?>">
+    <label>Benodigdheden</label>
+    <input type="text" name="benodigdheden" value="<?php echo htmlspecialchars($ingredient['benodigdheden']); ?>">
 
     <br><br>
     <input type="submit" name="opslaan" value="Opslaan" class="knop">
