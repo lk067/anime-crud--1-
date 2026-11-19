@@ -13,6 +13,7 @@ $ingredienten = $result->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
 
+
 <h1>Mijn ingredient lijst</h1>
 <a href="create.php" class="knop">Ingredient toevoegen</a>
 <br><br>

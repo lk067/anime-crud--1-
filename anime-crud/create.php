@@ -30,6 +30,8 @@ if (isset($_POST['opslaan'])) {
 </head>
 <body>
 
+
+
 <h1>Ingredient toevoegen</h1>
 
 <p class="fout"><?php echo $melding; ?></p>
